@@ -12,6 +12,9 @@ const config: Config = {
         'wall-pattern': "url('/images/wall.jpg')",
       }
     },
+    container:{
+      center:true
+    }
   },
   plugins: [],
 };
