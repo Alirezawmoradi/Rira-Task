@@ -8,7 +8,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className='min-h-screen text-gray-200 bg-gray-800'>
+      <body className='min-h-screen grid grid-rows-[80px_1fr_auto] text-gray-900 bg-wall-pattern font-semibold'>
         {children}
       </body>
     </html>
