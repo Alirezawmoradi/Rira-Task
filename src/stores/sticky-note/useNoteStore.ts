@@ -1,7 +1,6 @@
 import {create} from "zustand";
 import {NotesState} from "@/stores/sticky-note/note.types";
 import {colors} from "@/app/utils/colors";
-import {state} from "sucrase/dist/types/parser/traverser/base";
 
 export const useNoteStore = create<NotesState>((set) => ({
     notes: [
@@ -34,10 +33,22 @@ export const useNoteStore = create<NotesState>((set) => ({
                 ),
             })),
 
-        changeColor: (id: number, color: string) => {
+        changeColor: (id: number, color: string) =>
             set((state) => ({
                 notes: state.notes.map((note) => note.id === id ? {...note, color: color} : note),
-            }))
-        }
+            })),
+
+        moveNote: (draggedId, targetId) =>
+            set((state) => {
+                const draggedNoteIndex = state.notes.findIndex(note => note.id === draggedId);
+                const targetNoteIndex = state.notes.findIndex(note => note.id === targetId);
+
+                const updatedNotes = [...state.notes];
+                const [draggedNote] = updatedNotes.splice(draggedNoteIndex, 1);
+                updatedNotes.splice(targetNoteIndex, 0, draggedNote);
+
+                return { notes: updatedNotes };
+            }),
+
     }
 }))
