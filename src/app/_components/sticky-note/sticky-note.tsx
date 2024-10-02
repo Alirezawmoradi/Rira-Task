@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from "react";
+import React from "react";
 import {Stickies} from "@/app/_components/stickies/stickies";
 import {useNoteStore} from "@/stores/sticky-note/useNoteStore";
 import {Button} from "@/app/_components/button/button";
