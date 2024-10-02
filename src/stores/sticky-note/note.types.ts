@@ -6,6 +6,7 @@ export type NotesState = {
         updateNote: (id: number, newText: string) => void;
         toggleEditing: (id: number, isEditing: boolean) => void;
         changeColor: (id: number, color: string) => void;
+        moveNote: (draggedId: number, targetId: number) => void;
     }
 };
 
