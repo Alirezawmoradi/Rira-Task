@@ -5,9 +5,7 @@ import {persist} from "zustand/middleware";
 
 export const useNoteStore = create(persist<NotesState>(
     (set) => ({
-        notes: [
-            {id: 1, text: "Create you first note", isEditing: false, color: colors[0], createdAt: new Date(), deadline: null},
-        ],
+        notes: [],
 
         actions: {
 
