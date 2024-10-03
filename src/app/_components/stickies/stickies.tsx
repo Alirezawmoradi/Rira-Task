@@ -9,18 +9,33 @@ import {Textarea} from "@/app/_components/text-area/text-area";
 import {useNoteStore} from "@/stores/sticky-note/useNoteStore";
 import {useDrag, useDrop} from "react-dnd";
 import {TbDragDrop2} from "react-icons/tb";
+import DatePicker from "react-multi-date-picker";
+import DateObject from "react-date-object";
+import Icon from "react-multi-date-picker/components/icon";
+import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
+import weekends from "react-multi-date-picker/plugins/highlight_weekends"
+import Toolbar from "react-multi-date-picker/plugins/toolbar"
+import {Expired} from "@/app/_components/expired/expired";
 
-export const Stickies: React.FC<StickiesTypes> = ({id, text, handleDelete, handleEdit}: StickiesTypes) => {
+
+export const Stickies: React.FC<StickiesTypes> = ({
+                                                      id,
+                                                      text,
+                                                      handleDelete,
+                                                      handleEdit,
+                                                  }: StickiesTypes) => {
     const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
 
     const [isDropping, setIsDropping] = useState(false);
 
     const note = useNoteStore((state) => state.notes.find((note) => note.id === id));
-    const {toggleEditing, changeColor, moveNote} = useNoteStore((state) => state.actions);
+    const {toggleEditing, changeColor, moveNote, setDeadline} = useNoteStore((state) => state.actions);
 
     const [updatedText, setUpdatedText] = useState(text);
 
     const cardRef = useRef<HTMLDivElement | null>(null);
+
+    const isDeadlinePassed = note?.deadline ? note.deadline < new Date() : false;
 
     const ITEM_TYPE = 'STICKY_NOTE';
 
@@ -74,14 +89,29 @@ export const Stickies: React.FC<StickiesTypes> = ({id, text, handleDelete, handl
         setIsColorPickerVisible(false);
     };
 
+    const handleDateChange = (date: DateObject | null) => {
+        if (date) {
+            const today = new Date();
+            const isToday = date.toDate().toDateString() === today.toDateString();
+
+            if (!isToday) {
+                setDeadline(id, date.toDate());
+            }
+        }
+    };
+
     return (
         <div
             ref={cardRef}
             className={`flex flex-col w-5/6 h-64 p-6 relative m-4 text-center shadow-lg transform rounded-xl transition-all duration-500 
             ${note?.color}
-             ${isDragging ? 'opacity-75 scale-105' : ''}
-             ${isDropping ? 'sliding' : ''}`}
+            ${isDeadlinePassed ? 'bg-red-500 text-gray-600 opacity-50 pointer-events-none' : ''}
+            ${isDragging ? 'opacity-75 scale-105' : ''}
+            ${isDropping ? 'sliding' : ''}`}
         >
+            {isDeadlinePassed && (
+                <Expired/>
+            )}
             <div className="absolute top-2 left-2 text-xs font-medium text-gray-800/60">
                 Created At : {note?.createdAt.toLocaleDateString()}
             </div>
@@ -111,15 +141,40 @@ export const Stickies: React.FC<StickiesTypes> = ({id, text, handleDelete, handl
             <div
                 className="flex justify-center border rounded-2xl bg-gray-200 items-center absolute bottom-2 right-2 p-1 px-2 cursor-pointer gap-2">
 
+                <DatePicker
+                    className='z-50 mt-2'
+                    value={note?.deadline}
+                    onChange={handleDateChange}
+                    plugins={[
+                        <DatePickerHeader position="left" size='medium'/>,
+                        [weekends()],
+                        <Toolbar
+                            position="bottom"
+                            names={{
+                                today: "select today",
+                                deselect: "select none",
+                                close: "close"
+                            }}/>
+                    ]}
+                    render={<Icon height={20} width={20}/>}
+                />
+
                 <IoColorPalette className='text-gray-900 hover:text-gray-700 transition-colors duration-300'
                                 onClick={() => setIsColorPickerVisible(!isColorPickerVisible)} size={20}/>
+
                 <MdDelete className='text-red-600 hover:text-red-700 transition-colors duration-300' size={20}
                           onClick={() => handleDelete(id)}
                 />
+
                 <FiEdit className='text-gray-800 hover:text-gray-700 transition-colors duration-300' size={20}
                         onClick={() => toggleEditing(id, true)}
                 />
             </div>
+            {note?.deadline && (
+                <div className="absolute bottom-4 left-3 text-xs text-red-700">
+                    Ex : {note.deadline.toLocaleDateString()}
+                </div>
+            )}
             {isColorPickerVisible && (
                 <div className="absolute bottom-10 right-2 flex space-x-2 p-2 bg-white shadow-lg rounded-lg">
                     {colors.map((colorClass, index) => (
