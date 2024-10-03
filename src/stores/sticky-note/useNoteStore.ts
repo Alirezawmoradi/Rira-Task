@@ -4,9 +4,9 @@ import {colors} from "@/app/utils/colors";
 
 export const useNoteStore = create<NotesState>((set) => ({
     notes: [
-        {id: 1, text: "test", isEditing: false, color: colors[0], createdAt: new Date()},
-        {id: 2, text: "test", isEditing: false, color: colors[1], createdAt: new Date()},
-        {id: 3, text: "test", isEditing: false, color: colors[2], createdAt: new Date()}
+        {id: 1, text: "test", isEditing: false, color: colors[0], createdAt: new Date(), deadline: null},
+        {id: 2, text: "test", isEditing: false, color: colors[1], createdAt: new Date(), deadline: null},
+        {id: 3, text: "test", isEditing: false, color: colors[2], createdAt: new Date(), deadline: null}
     ],
 
     actions: {
@@ -19,7 +19,8 @@ export const useNoteStore = create<NotesState>((set) => ({
                     text,
                     isEditing: true,
                     color: randomColor,
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    deadline: null
                 }],
             }))
         },
@@ -55,6 +56,10 @@ export const useNoteStore = create<NotesState>((set) => ({
 
                 return {notes: updatedNotes};
             }),
+
+        setDeadline: (id, deadline) => set((state) => ({
+            notes: state.notes.map((note) => note.id === id ? {...note, deadline} : note),
+        }))
 
     }
 }))
