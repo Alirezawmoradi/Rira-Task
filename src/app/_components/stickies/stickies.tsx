@@ -16,6 +16,9 @@ import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header
 import weekends from "react-multi-date-picker/plugins/highlight_weekends"
 import Toolbar from "react-multi-date-picker/plugins/toolbar"
 import {Expired} from "@/app/_components/expired/expired";
+import transition from "react-element-popper/animations/transition";
+import opacity from "react-element-popper/animations/opacity"
+
 
 
 export const Stickies: React.FC<StickiesTypes> = ({
@@ -91,12 +94,7 @@ export const Stickies: React.FC<StickiesTypes> = ({
 
     const handleDateChange = (date: DateObject | null) => {
         if (date) {
-            const today = new Date();
-            const isToday = date.toDate().toDateString() === today.toDateString();
-
-            if (!isToday) {
-                setDeadline(id, date.toDate());
-            }
+            setDeadline(id, date.toDate());
         }
     };
 
@@ -105,14 +103,12 @@ export const Stickies: React.FC<StickiesTypes> = ({
             ref={cardRef}
             className={`flex flex-col w-5/6 h-64 p-6 relative m-4 text-center shadow-lg transform rounded-xl transition-all duration-500 
             ${note?.color}
-            ${isDeadlinePassed ? 'bg-red-500 text-gray-600 opacity-50 pointer-events-none' : ''}
+            ${isDeadlinePassed ? 'bg-red-500 text-gray-600 opacity-50 ' : ''}
             ${isDragging ? 'opacity-75 scale-105' : ''}
             ${isDropping ? 'sliding' : ''}`}
         >
-            {isDeadlinePassed && (
-                <Expired/>
-            )}
-            <div className="absolute top-2 left-2 text-xs font-medium text-gray-800/60">
+            {isDeadlinePassed && <Expired/>}
+            <div className={`absolute top-2 left-2 text-xs font-medium transition-all duration-500  ${note!.color==='bg-yellow-200'?'text-gray-800/60':'text-white/75'}`}>
                 Created At : {note?.createdAt.toLocaleDateString()}
             </div>
             <div
@@ -142,11 +138,18 @@ export const Stickies: React.FC<StickiesTypes> = ({
                 className="flex justify-center border rounded-2xl bg-gray-200 items-center absolute bottom-2 right-2 p-1 px-2 cursor-pointer gap-2">
 
                 <DatePicker
-                    className='z-50 mt-2'
+                    className='z-50 mb-2'
+                    highlightToday={false}
+                    onOpenPickNewDate={false}
+                    scrollSensitive={false}
+                    animations={[
+                        opacity(),
+                        transition({ from: 35, duration: 800 })
+                    ]}
                     value={note?.deadline}
                     onChange={handleDateChange}
                     plugins={[
-                        <DatePickerHeader position="left" size='medium'/>,
+                        <DatePickerHeader position="top" size='small'/>,
                         [weekends()],
                         <Toolbar
                             position="bottom"
@@ -156,6 +159,8 @@ export const Stickies: React.FC<StickiesTypes> = ({
                                 close: "close"
                             }}/>
                     ]}
+                    calendarPosition='top'
+                    fixRelativePosition={true}
                     render={<Icon height={20} width={20}/>}
                 />
 
@@ -171,7 +176,7 @@ export const Stickies: React.FC<StickiesTypes> = ({
                 />
             </div>
             {note?.deadline && (
-                <div className="absolute bottom-4 left-3 text-xs text-red-700">
+                <div className={`absolute bottom-4 left-3 text-xs transition-all duration-500 ${note!.color==='bg-yellow-200'?'text-red-700':'text-red-900'}`}>
                     Ex : {note.deadline.toLocaleDateString()}
                 </div>
             )}
