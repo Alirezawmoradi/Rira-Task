@@ -15,4 +15,5 @@ type Note = {
     text: string;
     isEditing: boolean;
     color: string;
+    createdAt: Date;
 };
