@@ -20,7 +20,6 @@ import transition from "react-element-popper/animations/transition";
 import opacity from "react-element-popper/animations/opacity"
 
 
-
 export const Stickies: React.FC<StickiesTypes> = ({
                                                       id,
                                                       text,
@@ -108,7 +107,8 @@ export const Stickies: React.FC<StickiesTypes> = ({
             ${isDropping ? 'sliding' : ''}`}
         >
             {isDeadlinePassed && <Expired/>}
-            <div className={`absolute top-2 left-2 text-xs font-medium transition-all duration-500  ${note!.color==='bg-yellow-200'?'text-gray-800/60':'text-white/75'}`}>
+            <div
+                className={`absolute top-2 left-2 text-xs font-medium transition-all duration-500  ${note!.color === 'bg-yellow-200' ? 'text-gray-800/60' : 'text-white/75'}`}>
                 Created At : {note?.createdAt.toLocaleDateString()}
             </div>
             <div
@@ -119,6 +119,7 @@ export const Stickies: React.FC<StickiesTypes> = ({
             <div className='flex mt-2 justify-start items-start text-start w-full h-full relative'>
                 {note?.isEditing ? (
                     <Textarea
+                        id={note.id}
                         value={updatedText}
                         onChange={setUpdatedText}
                         onBlur={() => {
@@ -144,7 +145,7 @@ export const Stickies: React.FC<StickiesTypes> = ({
                     scrollSensitive={false}
                     animations={[
                         opacity(),
-                        transition({ from: 35, duration: 800 })
+                        transition({from: 35, duration: 800})
                     ]}
                     value={note?.deadline}
                     onChange={handleDateChange}
@@ -176,7 +177,8 @@ export const Stickies: React.FC<StickiesTypes> = ({
                 />
             </div>
             {note?.deadline && (
-                <div className={`absolute bottom-4 left-3 text-xs transition-all duration-500 ${note!.color==='bg-yellow-200'?'text-red-700':'text-red-900'}`}>
+                <div
+                    className={`absolute bottom-4 left-3 text-xs transition-all duration-500 ${note!.color === 'bg-yellow-200' ? 'text-red-700' : 'text-red-900'}`}>
                     Ex : {note.deadline.toLocaleDateString()}
                 </div>
             )}
