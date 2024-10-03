@@ -1,13 +1,17 @@
 'use client';
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect} from 'react';
+import {useNoteStore} from "@/stores/sticky-note/useNoteStore";
 
 export const Textarea: React.FC<TextareaProps> = ({
-                                                                      value,
-                                                                      onChange,
-                                                                      onBlur,
-                                                                      handleEnterKey,
-                                                                  }) => {
+                                                      id,
+                                                      value,
+                                                      onChange,
+                                                      onBlur,
+                                                      handleEnterKey,
+                                                  }) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+    const note = useNoteStore((state) => state.notes.find((note) => note.id === id));
 
     useEffect(() => {
         if (textareaRef.current) {
@@ -18,7 +22,7 @@ export const Textarea: React.FC<TextareaProps> = ({
     return (
         <textarea
             ref={textareaRef}
-            className="bg-transparent outline-none font-semibold w-full h-full p-0 m-0 focus:ring-0 border-none resize-none overflow-hidden transition-colors duration-200 ease-in-out focus:border-none text-blue-700"
+            className={`bg-transparent outline-none font-semibold w-full h-full p-0 m-0 focus:ring-0 border-none resize-none overflow-hidden transition-colors duration-200 ease-in-out focus:border-none  ${note!.color==='bg-yellow-200'?'text-gray-800':'text-gray-200'}`}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onBlur={onBlur}
