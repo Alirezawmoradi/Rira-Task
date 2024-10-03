@@ -82,12 +82,14 @@ export const Stickies: React.FC<StickiesTypes> = ({id, text, handleDelete, handl
              ${isDragging ? 'opacity-75 scale-105' : ''}
              ${isDropping ? 'sliding' : ''}`}
         >
+            <div className="absolute top-2 left-2 text-xs font-medium text-gray-800/60">
+                Created At : {note?.createdAt.toLocaleDateString()}
+            </div>
             <div
                 className={`absolute top-2 right-2 cursor-grabbing ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             >
                 <TbDragDrop2 size={18} className="text-gray-500 hover:text-gray-800 transition-colors duration-300"/>
             </div>
-
             <div className='flex mt-2 justify-start items-start text-start w-full h-full relative'>
                 {note?.isEditing ? (
                     <Textarea
