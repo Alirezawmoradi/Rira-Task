@@ -16,7 +16,9 @@ import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header
 import weekends from "react-multi-date-picker/plugins/highlight_weekends"
 import Toolbar from "react-multi-date-picker/plugins/toolbar"
 import {Expired} from "@/app/_components/expired/expired";
+// @ts-ignore
 import transition from "react-element-popper/animations/transition";
+// @ts-ignore
 import opacity from "react-element-popper/animations/opacity"
 
 
