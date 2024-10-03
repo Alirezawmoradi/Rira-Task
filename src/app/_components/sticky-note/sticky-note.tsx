@@ -2,7 +2,7 @@
 import React from "react";
 import {Stickies} from "@/app/_components/stickies/stickies";
 import {useNoteStore} from "@/stores/sticky-note/useNoteStore";
-import {Button} from "@/app/_components/button/button";
+import {AddButton} from "@/app/_components/button/button";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 
@@ -12,9 +12,6 @@ export const StickyNote: React.FC = () => {
 
     return (
         <div className='container mt-20'>
-            <div className="flex justify-center mb-8">
-                <Button buttonText={'Add New Note'} onClick={() => addNote('')}/>
-            </div>
             <div
                 className=' container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-20'>
                 {
@@ -29,6 +26,9 @@ export const StickyNote: React.FC = () => {
                         )
                     })
                 }
+                <div className='flex justify-center items-center'>
+                    <AddButton buttonText='Add New Note' onClick={() => addNote('')}/>
+                </div>
             </div>
         </div>
     );
