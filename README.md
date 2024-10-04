@@ -60,10 +60,7 @@ To run this project locally, follow these steps:
 3. **Setting a Deadline :**
   - Click the "Edit" icon on the note to start editing the note text.
   Hit "Enter" to save or click outside the note to save automatically.
-4. **Setting a Deadline :**
-  - Use the date picker to assign a deadline to the note.
-    The note will change color and become disabled once the deadline has passed.
-5. **Drag and Drop :**
+4. **Drag and Drop :**
   - Reorganize notes by dragging and dropping them into different positions on the board.
 
 ## State Management
