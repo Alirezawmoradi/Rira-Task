@@ -10,10 +10,7 @@ A fully customizable and interactive sticky note board application built with Ne
 3. **Installation**
 4. **Usage**
 5. **State Management**
-6. **Drag-and-Drop Feature**
-7. **Date Picker & Deadline Management**
-8. **Customizing Colors**
-9. **License**
+6. **License**
 
 ## Features
 
