@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sticky Note Application
+## Overview
 
-## Getting Started
+A fully customizable and interactive sticky note board application built with Next.js, React, Zustand, and Tailwind CSS. The app allows users to create, edit, and manage sticky notes with deadlines, color customizations, and drag-and-drop functionality.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of Contents
+1. **Features**
+2. **Tech Stack**
+3. **Installation**
+4. **Usage**
+5. **State Management**
+6. **Drag-and-Drop Feature**
+7. **Date Picker & Deadline Management**
+8. **Customizing Colors**
+9. **License**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Create, edit, and delete sticky notes.
+- Customize note colors with a built-in color picker.
+- Set deadlines for notes using a date picker.
+- Visual indication when a note's deadline has passed (disables the note and changes color).
+- Drag and drop functionality to rearrange notes on the board.
+- Auto-save changes to localStorage using zustand state management.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
+- **Framework :** Next.js (React-based)
+- **State Management :** Zustand
+- **Styling :** Tailwind CSS
+- **Date Picker :** react-multi-date-picker
+- **Drag-and-Drop :** React DnD
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+To run this project locally, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/Alirezawmoradi/Rira-Task.git
 
-## Deploy on Vercel
+2. Install dependencies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Start the application:
+
+   ```bash
+   npm run dev
+   
+4. Open http://localhost:3000 in your browser to see the app in action.
+
+## Usage
+
+1. **Creating a New Note :**
+  - Click the "Add New Note" button to create a new sticky note.
+   A new note will appear with a random background color.
+2. **Editing Notes :**
+  - Click the "Edit" icon on the note to start editing the note text.
+  Hit "Enter" to save or click outside the note to save automatically.
+3. **Setting a Deadline :**
+  - Click the "Edit" icon on the note to start editing the note text.
+  Hit "Enter" to save or click outside the note to save automatically.
+3. **Setting a Deadline :**
+  - Use the date picker to assign a deadline to the note.
+    The note will change color and become disabled once the deadline has passed.
+4. **Drag and Drop :**
+  - Reorganize notes by dragging and dropping them into different positions on the board.
+
+## State Management
+I utilize Zustand for global state management. All the actions for adding, updating, deleting, and reordering notes are stored in a centralized store.
+
+## License
+This project is open-source and available under the [MIT license](https://opensource.org/licenses/MIT).
+
+
